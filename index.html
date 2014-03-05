@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Заголовок документа</title>
+   <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      #container {
+        background-color: #222;
+        display: inline-block;
+        width: 580px;
+        height: 202px;
+      }
+      #buttons {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+      }
+      #buttons > input {
+        padding: 10px;
+        display: block;
+        margin-top: 5px;
+      }
+   </style>
+</head>
+<body>
+    <div id="container"></div>
+    <div id="buttons">
+      <input type="button" id="punch" value="Punch">
+    </div>
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.min.js"></script>
+    <script defer="defer">
+      var stage = new Kinetic.Stage({
+        container: 'container',
+        width: 1000,
+        height: 1000
+      });
+      var layer = new Kinetic.Layer();
+
+      var imageObj = new Image();
+      imageObj.onload = function() {
+        var blob = new Kinetic.Sprite({
+          x: 10,
+          y: 10,
+          image: imageObj,
+          animation: 'idle',
+          animations: {
+            idle: [
+              // x, y, width, height (4 frames)
+	        204,154,173,150,
+                408,154,173,150,
+		612,154,173,150,
+                816,154,173,150,
+		1020,154,173,150,
+		1224,154,173,150
+            ]
+          },
+          frameRate: 7,
+          frameIndex: 0
+        });
+
+        // add the shape to the layer
+        layer.add(blob);
+
+        // add the layer to the stage
+        stage.add(layer);
+
+        // start sprite animation
+        blob.start();
+
+        var frameCount = 0;
+        
+        blob.on('frameIndexChange', function(evt) {
+          if (blob.animation() === 'punch' && ++frameCount > 3) {
+            blob.animation('idle');
+            frameCount = 0;
+          }
+        });
+          
+        document.getElementById('punch').addEventListener('click', function() {
+          blob.animation('punch');
+        }, false);
+      };
+      imageObj.src = 'http://i58.fastpic.ru/big/2014/0305/0d/ad7b20ee342c6c2e76c64815807a2a0d.jpg';
+    </script>
+    <audio src="http://vk-music.ru/files/73605055/Dendy+-+Main+Menu+9999+in+1_(mp3top100.net).mp3" autoplay loop</audio>
+</body>
+</html>
