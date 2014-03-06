@@ -27,64 +27,64 @@
 </head>
 <body>
     <div id="container"></div>
-    <div id="buttons">
-      <input type="button" id="punch" value="Punch">
-    </div>
     <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.min.js"></script>
     <script defer="defer">
-      var stage = new Kinetic.Stage({
-        container: 'container',
-        width: 1000,
-        height: 1000
-      });
-      var layer = new Kinetic.Layer();
-
-      var imageObj = new Image();
-      imageObj.onload = function() {
-        var blob = new Kinetic.Sprite({
-          x: 10,
-          y: 10,
-          image: imageObj,
-          animation: 'idle',
-          animations: {
-            idle: [
-              // x, y, width, height (4 frames)
-	        204,154,173,150,
-                408,154,173,150,
-		612,154,173,150,
-                816,154,173,150,
-		1020,154,173,150,
-		1224,154,173,150
-            ]
-          },
-          frameRate: 7,
-          frameIndex: 0
+        function getLine(param) {
+            var imgMasCoord = new Array(48);
+            for (var i = 0; i < 32; i++) {
+                imgMasCoord[i * 4] = 204 * i;
+                imgMasCoord[i * 4 + 1] = param;
+                imgMasCoord[i * 4 + 2] = 173;
+                imgMasCoord[i * 4 + 3] = 150;
+            }
+            return imgMasCoord;
+        }
+        var arrayCoords = getLine(0).concat(getLine(308)).concat(getLine(462)).concat(getLine(615));
+        console.log(arrayCoords.length);
+        var stage = new Kinetic.Stage({
+            container: 'container',
+            width: 1000,
+            height: 1000
         });
+        var layer = new Kinetic.Layer();
+        var imageObj = new Image();
+        imageObj.onload = function () {
+            var blob = new Kinetic.Sprite({
+                x: 10,
+                y: 10,
+                image: imageObj,
+                animation: 'idle',
+                animations: {
+                    idle: arrayCoords
+                },
+                frameRate: 7,
+                frameIndex: 0
+            });
 
-        // add the shape to the layer
-        layer.add(blob);
+            // add the shape to the layer
+            layer.add(blob);
 
-        // add the layer to the stage
-        stage.add(layer);
+            // add the layer to the stage
+            stage.add(layer);
 
-        // start sprite animation
-        blob.start();
+            // start sprite animation
+            blob.start();
 
-        var frameCount = 0;
-        
-        blob.on('frameIndexChange', function(evt) {
-          if (blob.animation() === 'punch' && ++frameCount > 3) {
-            blob.animation('idle');
-            frameCount = 0;
-          }
-        });
-          
-        document.getElementById('punch').addEventListener('click', function() {
-          blob.animation('punch');
-        }, false);
-      };
-      imageObj.src = 'http://i58.fastpic.ru/big/2014/0305/0d/ad7b20ee342c6c2e76c64815807a2a0d.jpg';
+            var frameCount = 0;
+
+            blob.on('frameIndexChange', function (evt) {
+                if (blob.animation() === 'punch' && ++frameCount > 3) {
+                    blob.animation('idle');
+                    frameCount = 0;
+                }
+            });
+
+            document.getElementById('punch').addEventListener('click', function () {
+                blob.animation('punch');
+            }, false);
+        };
+        imageObj.src = 'http://i58.fastpic.ru/big/2014/0305/0d/ad7b20ee342c6c2e76c64815807a2a0d.jpg';
     </script>
-    <audio src="http://vk-music.ru/files/73605055/Dendy+-+Main+Menu+9999+in+1_(mp3top100.net).mp3" autoplay loop</audio>
+    <audio src="http://vk-music.ru/files/73605055/Dendy+-+Main+Menu+9999+in+1_(mp3top100.net).mp3" autoplay </audio>
 </body>
 </html>
