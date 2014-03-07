@@ -7,26 +7,33 @@
         margin: 0px;
         padding: 0px;
       }
+      #fullcontainer {
+	display: block;
+        background-color: rgb(219, 132, 132);
+	font-family: Tahoma, Geneva, sans-serif;
+        width: 365px;
+      }
       #container {
-        background-color: #222;
+        background-color: rgb(219, 132, 132);
         display: inline-block;
-        width: 580px;
-        height: 202px;
       }
-      #buttons {
-        position: absolute;
-        top: 5px;
-        left: 10px;
-      }
-      #buttons > input {
-        padding: 10px;
-        display: block;
-        margin-top: 5px;
+      #text {
+ 	padding : 10px;
+	background-color: rgb(219, 132, 132);
+        display : inline-block;
       }
    </style>
 </head>
 <body>
-    <div id="container"></div>
+    <div id ="fullcontainer">
+    <div id="text">
+    <p>Поздравляю с 8 марта! Желаю всегда оставаться красивой, умной, женственной, желанной и многое другое! И, наконец, пусть твоя жить будет такой же красивой и романтичной как в этой небольшой сказке, воспроизведённой мною!<br>С наилучшими пожеланиями к Насте, от Вадима</p>
+    </div>
+    <br>
+    <div id="container">
+	
+    </div>
+    </div>
     <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.min.js"></script>
     <script defer="defer">
         function getLine(param) {
@@ -43,8 +50,8 @@
         console.log(arrayCoords.length);
         var stage = new Kinetic.Stage({
             container: 'container',
-            width: 1000,
-            height: 1000
+            width: 365,
+            height: 315
         });
         var layer = new Kinetic.Layer();
         var imageObj = new Image();
@@ -57,7 +64,7 @@
                 animations: {
                     idle: arrayCoords
                 },
-                frameRate: 7,
+                frameRate: 5,
                 frameIndex: 0
             });
 
